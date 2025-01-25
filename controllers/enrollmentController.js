@@ -66,6 +66,9 @@ const cancelEnrollment = async ( request, response)=>{
 
         const sql = "DELETE FROM enrollments WHERE id = ?"
         const res = await db.query(sql, [id])
+        return response.status(200).json({
+            message:"suscesso"
+        }) 
     } catch (error) {
         return response.status(400).json({
             message:"error",
@@ -98,6 +101,14 @@ const  getEnrollments = async ( request, response)=>{
                 message: "invalid data"
             })
         }
+
+        const sql = "SELECT * FROM enrollments WHERE user_id = ?";
+        const res = await db.query(sql, [userId])
+
+        return response.status(200).json({
+            message:"suscesso",
+            data: res[0]
+        })
 
     } catch (error) {
         return response.status(400).json({
